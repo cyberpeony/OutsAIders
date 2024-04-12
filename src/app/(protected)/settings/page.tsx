@@ -55,7 +55,7 @@ const SettingsPage = () => {
       isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     }
   });
-
+  
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     settings(values)
       .then((data) => {
@@ -71,8 +71,8 @@ const SettingsPage = () => {
       .catch(() => setError("Something went wrong!"));
   };
 
-  return (
-      <Card className="w-[600px]">
+    return (
+        <Card className="w-[600px] max-h-full overflow-y-auto">
         <CardHeader>
           <p className="text-2xl font-semibold text-center">
             Settings
@@ -131,7 +131,7 @@ const SettingsPage = () => {
                       </FormItem>
                     )}
                   />
-                {user?.isOAuth === false && (
+                { user?.isOAuth === false && (
                 <>
                   <FormField 
                     control={form.control}
