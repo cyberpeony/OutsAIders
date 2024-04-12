@@ -8,9 +8,8 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 
-export const AdminPage = () => {
+const AdminPage = () => {
     
-
     const onApiRouteClick = () => {
         fetch("/api/admin")
             .then((response) => {
