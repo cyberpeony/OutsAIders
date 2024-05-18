@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import { currentUser } from '@/lib/auth';
-
+import { LoginButton } from "@/components/auth/login-button";
 const font = Poppins({
   subsets: ["latin"],
   weight: ["600"],
@@ -8,6 +8,17 @@ const font = Poppins({
 export default async function Home() {
   const user = await currentUser();
   return (
-    <p>hola</p>
+    <div>
+    {user ? (
+      <div>{user.name}</div>
+    ) : (
+      <div>
+        <LoginButton mode="modal">
+          logeate
+        </LoginButton>
+      </div>
+    )}
+    </div>
+    
   );
 }
