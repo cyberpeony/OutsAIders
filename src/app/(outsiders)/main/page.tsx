@@ -1,78 +1,22 @@
 import { CardContent, Card } from "@/components/ui/card";
 import { CarouselItem, CarouselContent, CarouselPrevious, CarouselNext, Carousel } from "@/components/ui/carousel";
 import { currentUser } from "@/lib/auth";
-
-const sections = [
-  {
-    title: "Housing Options Near You",
-    items: [
-      {
-        title: "Luxury Apartment",
-        description: "Spacious 2-bedroom apartment with modern amenities.",
-        imageSrc: "/placeholder.svg"
-      },
-      {
-        title: "Cozy Townhouse",
-        description: "Charming 3-bedroom townhouse with a private backyard.",
-        imageSrc: "/placeholder.svg"
-      },
-      {
-        title: "Modern Loft",
-        description: "Stylish 1-bedroom loft with high ceilings and exposed brick.",
-        imageSrc: "/placeholder.svg"
-      }
-    ]
-  },
-  {
-    title: "Featured Promotions",
-    items: [
-      {
-        title: "Summer Sale",
-        description: "Up to 50% off on selected items.",
-        imageSrc: "/placeholder.svg"
-      },
-      {
-        title: "Free Shipping",
-        description: "Get free shipping on all orders over $50.",
-        imageSrc: "/placeholder.svg"
-      },
-      {
-        title: "Buy One, Get One",
-        description: "Buy one, get one free on selected products.",
-        imageSrc: "/placeholder.svg"
-      }
-    ]
-  },
-  {
-    title: "Nearby Services",
-    items: [
-      {
-        title: "Restaurants",
-        description: "Discover top-rated dining options.",
-        icon: MenuIcon
-      },
-      {
-        title: "Shopping",
-        description: "Explore local shops and boutiques.",
-        icon: ShoppingBagIcon
-      },
-      {
-        title: "Parks",
-        description: "Enjoy the great outdoors.",
-        icon: CircleParkingIcon
-      },
-      {
-        title: "Gyms",
-        description: "Stay fit and healthy.",
-        icon: DumbbellIcon
-      }
-    ]
-  }
-];
+import { publicationSchema } from "@/models/Publications";
 
 export default async function MainPage() {
   const user = await currentUser();
+  await dbConnect();
+  const publications = await Publications.find();
 
+  const sections = await fetch("/api/publications")
+    .then((response: publicationSchema) => {
+      if (response.ok) {
+          console.log(response);
+          toast.success("Allowed API Route!"); 
+      } else {
+          toast.error("Forbidden API Route!");
+      }
+    })
   return (
     <>
       {sections.map((section, index) => (

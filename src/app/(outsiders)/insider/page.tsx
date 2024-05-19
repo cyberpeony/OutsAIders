@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 type Message = {
-  text: string;
+  text: string; 
   sender: string;
   timestamp: string;
 };
@@ -30,15 +30,16 @@ export default function InsiderPage() {
     };
     setMessages([...messages, newMessage]);
     setInputMessage("");
-
+    
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userMessage: user.id, botMessage: inputMessage })
+        body: JSON.stringify({ userId: user.id, message: inputMessage }) // Pasa userId
       });
+
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error from API:', errorData);
@@ -65,7 +66,7 @@ export default function InsiderPage() {
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="text-lg font-medium">AI Assistant</h3>
+            <h3 className="text-lg font-medium">AI Insider</h3>
             <p className="text-sm text-gray-400">Online</p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, models } from 'mongoose';
 
-const publicationSchema = new Schema({
+export const publicationSchema = new Schema({
     id: {
         type: String,
         default: () => new mongoose.Types.ObjectId().toString(),

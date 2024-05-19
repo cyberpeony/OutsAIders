@@ -132,6 +132,7 @@ export default function Map() {
           height="100%"
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxAccessToken="pk.eyJ1Ijoic2VyYTIxMTIiLCJhIjoiY2x3Y3RoNDIxMTBkcDJrbml1djZpc2xiMSJ9.ajQXnwTxAhAOrG7S4dvQxg"
+          onViewportChange={setViewport}
           ref={mapContainer}
           scrollZoom={true}
           dragPan={true}
