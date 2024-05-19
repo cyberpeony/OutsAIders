@@ -6,17 +6,8 @@ import { publicationSchema } from "@/models/Publications";
 export default async function MainPage() {
   const user = await currentUser();
   await dbConnect();
-  const publications = await Publications.find();
+  const sections = await Publications.find();
 
-  const sections = await fetch("/api/publications")
-    .then((response: publicationSchema) => {
-      if (response.ok) {
-          console.log(response);
-          toast.success("Allowed API Route!"); 
-      } else {
-          toast.error("Forbidden API Route!");
-      }
-    })
   return (
     <>
       {sections.map((section, index) => (
