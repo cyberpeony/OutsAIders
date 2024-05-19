@@ -9,4 +9,4 @@ export const testSchema = new Schema({
     timestamps: true
 });
 
-export default models.Test || model('Test', testSchema)
+export default models.Tests || model('Tests', testSchema)
