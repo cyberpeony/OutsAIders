@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
-import Promotions from "@/models/Promotions";
+import Publications from "@/models/Publications";
 
 export async function GET() {
     await dbConnect();
-    const promotions = await Promotions.find();
-    return NextResponse.json(promotions);
+    const publications = await Publications.find();
+    return NextResponse.json(publications);
 }
 
 export async function POST(request: any) {
     try {
         const data = await request.json();
         await dbConnect();
-        const newPromotion = new Promotions(data);
-        const savedPromotion = await newPromotion.save();
-        return NextResponse.json(savedPromotion);
+        const newPublication = new Publications(data);
+        const savedPublication = await newPublication.save();
+        return NextResponse.json(savedPublication);
     } catch (error: any) {
         return NextResponse.json(error.message, {
             status: 400

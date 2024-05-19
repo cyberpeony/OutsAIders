@@ -241,10 +241,11 @@ export function Housing() {
   )
 }
 
-function FilterIcon(props) {
+function FilterIcon({ className, ...rest }: IconProps) {
   return (
     <svg
-      {...props}
+      {...rest}
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -261,10 +262,11 @@ function FilterIcon(props) {
 }
 
 
-function SearchIcon(props) {
+function SearchIcon({ className, ...rest }: IconProps) {
   return (
     <svg
-      {...props}
+      {...rest}
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
