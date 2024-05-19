@@ -1,3 +1,5 @@
+require('dotenv').config({ path: '../.env' }); // Asegúrate de ajustar la ruta si es necesario
+
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const cors = require('cors');
@@ -7,7 +9,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
 
 // ENDPOINTS PARA PUBLICATIONS 
 // traerlas al feed 
@@ -92,6 +93,17 @@ app.put('/finances/:id', async (req, res) => {
         res.json(updatedFinances);
     } catch (error) {
         console.error('Error updating finances:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.delete('/finances/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await prisma.finances.delete({ where: { id } });
+        res.json({ message: 'Finances deleted' });
+    } catch (error) {
+        console.error('Error deleting Finances:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

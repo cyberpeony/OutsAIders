@@ -1,4 +1,4 @@
-"use client";
+//"use client";
 // components/SearchBar.tsx
 import { useState } from 'react';
 const SearchBar: React.FC = () => {

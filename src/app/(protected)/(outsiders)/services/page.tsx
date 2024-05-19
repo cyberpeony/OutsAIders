@@ -33,9 +33,14 @@ export default function Map() {
       longitude: -103.422119
     }
   ];
+  console.log("Lugares:", places);
+  console.log("Viewport:", viewport);
 
   useEffect(() => {
+    console.log("Efecto useEffect ejecutado");
+
     if (selectedPlace) {
+      console.log("Lugar seleccionado:", selectedPlace);
       setViewport({
         latitude: selectedPlace.latitude,
         longitude: selectedPlace.longitude,
@@ -45,6 +50,52 @@ export default function Map() {
   }, [selectedPlace]);
 
   return (
-    <p>Holamundo</p>
+    <div style={{ display: 'flex', height: '500px' }}>
+      <div style={{ width: '70%', height: '100%' }}>
+        <ReactMapGL
+          {...viewport}
+          width="100%"
+          height="100%"
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          onViewportChange={setViewport}
+          mapboxApiAccessToken="pk.eyJ1Ijoic2VyYTIxMTIiLCJhIjoiY2x3Y3RoNDIxMTBkcDJrbml1djZpc2xiMSJ9.ajQXnwTxAhAOrG7S4dvQxg" 
+          ref={mapContainer}
+        >
+          {places.map(place => (
+            <Marker key={place.id} latitude={place.latitude} longitude={place.longitude}>
+              <button 
+                onClick={() => setSelectedPlace(place)} 
+                style={{ cursor: 'pointer', background: 'none', border: 'none' }}
+              >
+                <img src="/pin.svg" alt="Pin" width="30" height="30" /> 
+              </button>
+            </Marker>
+          ))}
+
+          {selectedPlace && (
+            <Popup 
+              latitude={selectedPlace.latitude} 
+              longitude={selectedPlace.longitude} 
+              onClose={() => setSelectedPlace(null)}
+            >
+              <div>
+                <h2>{selectedPlace.name}</h2>
+              </div>
+            </Popup>
+          )}
+        </ReactMapGL>
+      </div>
+
+      <div style={{ width: '30%', height: '100%', overflowY: 'auto', padding: '20px' }}>
+        <h3>Lista de Lugares:</h3>
+        <ul>
+          {places.map(place => (
+            <li key={place.id} onClick={() => setSelectedPlace(place)}>
+              {place.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
