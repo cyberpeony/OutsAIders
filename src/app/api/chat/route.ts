@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 import Chat from "@/models/Chat";
+import { handleChatMessage } from '@/lib/chat';
 
 export async function GET() {
     try {
@@ -12,11 +13,20 @@ export async function GET() {
     }
 }
 
-export async function POST(request: any) {
+export async function POST(request: Request) {
     try {
         const data = await request.json();
         await dbConnect();
-        const newChat = new Chat(data);
+        const userId = data.userId;
+        const userMessage = data.message;
+        const response = await handleChatMessage(userId, userMessage);
+        
+        const newChat = new Chat({
+            userId: userId,
+            userMessage: userMessage,
+            botMessage: response
+          });
+
         const savedChat = await newChat.save();
         return NextResponse.json(savedChat);
     } catch (error: any) {

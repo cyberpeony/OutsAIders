@@ -37,7 +37,7 @@ export default function InsiderPage() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userId: user.id, message: inputMessage }) // Pasa userId
+        body: JSON.stringify({ userId: user.id, message: inputMessage }) // Pass userId and message
       });
 
     if (!response.ok) {
@@ -48,7 +48,7 @@ export default function InsiderPage() {
 
     const data = await response.json();
     const aiMessage = {
-      text: data.response,
+      text: data.botMessage, // Use botMessage from the response
       sender: "ai",
       timestamp: new Date().toLocaleTimeString()
     };
