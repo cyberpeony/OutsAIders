@@ -7,7 +7,7 @@ export default async function MainPage() {
   const user = await currentUser();
   await dbConnect();
   const sections = await Publications.find();
-
+  console.log('section:'sections)
   return (
     <>
       {sections.map((section, index) => (
