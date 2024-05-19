@@ -6,7 +6,7 @@ export default async function Promotions() {
   return (
     <div>
       <h1>Searchbro</h1>
-      
+      <h4>Searchbro</h4>
     </div>
     
   );

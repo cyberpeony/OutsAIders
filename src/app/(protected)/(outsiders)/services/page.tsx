@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MapWithList = () => {
+export default function Map() {
   const [viewport, setViewport] = useState({
     latitude: 20.659698,
     longitude: -103.349609,
@@ -48,5 +48,3 @@ const MapWithList = () => {
     <p>Holamundo</p>
   );
 };
-
-export default MapWithList;
