@@ -4,72 +4,58 @@ import Finances from "@/models/Finances";
 
 type Props = {
     params: { 
-      finance:  string,
+      id: string,
    }
 };
 
 export async function GET(request: any, { params }: Props) {
     try {
         await dbConnect();
-        const finance = await Finances.findById(params.finance).populate('user');
+        const finance = await Finances.findById(params.id);
 
-        if (!finance) {
-            return NextResponse.json({
-                message: 'Finance not found',
-            }, {
-                status: 404
-            });
-        }
+        if(!finance) return NextResponse.json({
+            message: 'Finance not found',
+        }, {
+            status: 404
+        });
 
         return NextResponse.json(finance);
-    } catch (error: any) {
-        return NextResponse.json(error.message, {
-            status: 400
-        });
+    } catch(error: any) {
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
 
 export async function DELETE(request: any, { params }: Props) {
     try {
         await dbConnect();
-        const financeDeleted = await Finances.findByIdAndDelete(params.finance);
-        
-        if (!financeDeleted) {
+        const finance = await Finances.findByIdAndDelete(params.id);
+        if (!finance)
             return NextResponse.json({
                 message: 'Finance not found',
             }, {
                 status: 404
             });
-        }
-
-        return NextResponse.json(financeDeleted);
+        return NextResponse.json({ message: 'Finance deleted successfully' });
     } catch (error: any) {
-        return NextResponse.json(error.message, {
-            status: 400
-        });
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
 
 export async function PUT(request: any, { params }: Props) {
     try {
-        await dbConnect();
         const data = await request.json();
-        const financeUpdated = await Finances.findByIdAndUpdate(params.finance, data, {
+        await dbConnect();
+        const finance = await Finances.findByIdAndUpdate(params.id, data, {
             new: true
         });
-
-        if (!financeUpdated) {
+        if (!finance)
             return NextResponse.json({
                 message: 'Finance not found',
             }, {
                 status: 404
             });
-        }
-
-        return NextResponse.json(financeUpdated);
+        return NextResponse.json(finance);
     } catch (error: any) {
-        return NextResponse.json(error.message, {
-            status: 400
-        });
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

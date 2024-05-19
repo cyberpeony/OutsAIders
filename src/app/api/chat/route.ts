@@ -1,24 +1,18 @@
-import { NextResponse } from "next/server";
-import dbConnect from "@/lib/dbConnect";
-import Chat from "@/models/Chat";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { handleChatMessage } from '@/lib/chat';
 
-export async function GET() {
-    await dbConnect();
-    const chats = await Chat.find();
-    return NextResponse.json(chats);
-}
-
-
-export async function POST(request: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    const { userId, message } = req.body;
     try {
-        const data = await request.json();
-        await dbConnect();
-        const newChat = new Chat(data);
-        const savedChat = await newChat.save();
-        return NextResponse.json(savedChat);
-    } catch (error: any) {
-        return NextResponse.json(error.message, {
-            status: 400
-        });
+      const response = await handleChatMessage(userId, message);
+      res.status(200).json({ response });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error handling chat message' });
     }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 }

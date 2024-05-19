@@ -71,7 +71,9 @@ const sections = [
 ];
 
 export default async function MainPage() {
-  const user = await currentUser();  return (
+  const user = await currentUser();
+
+  return (
     <>
       {sections.map((section, index) => (
         <section key={index} className="py-12 md:py-16 lg:py-20">

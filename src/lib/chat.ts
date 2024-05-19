@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" }); 
 const prisma = new PrismaClient();
 
-async function getUserFinances(userId: string) {
+export async function getUserFinances(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: { accounts: true }
@@ -15,14 +15,14 @@ async function getUserFinances(userId: string) {
     return user;
   }
   
-  async function getUserPreferences(userId: string) {
+export async function getUserPreferences(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId }
     });
     return user;
   }
   
-  async function getUserFeatures(userId: string) {
+export async function getUserFeatures(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId }
     });
@@ -30,7 +30,7 @@ async function getUserFinances(userId: string) {
   }
   
 
-  async function handleChatMessage(userId: string, message: string) {
+export async function handleChatMessage(userId: string, message: string) {
     // 1. Retrieve user data based on the message content
     let userData;
     if (message.includes("finances")) {

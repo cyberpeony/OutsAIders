@@ -6,9 +6,14 @@ import { Input } from "@/components/ui/input"
 import { useState } from 'react';
 import { useCurrentUser } from "@/hooks/use-current-user";
 
+type Message = {
+  text: string;
+  sender: string;
+  timestamp: string;
+};
 export default function InsiderPage() {
   const user = useCurrentUser();
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       text: "Hello, I'm your AI assistant. How can I help you today? I'm here to provide a calm and peaceful presence.",
       sender: "ai",
@@ -26,13 +31,19 @@ export default function InsiderPage() {
     setMessages([...messages, newMessage]);
     setInputMessage("");
 
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userId: user.id, message: inputMessage })
-    });
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userMessage: user.id, botMessage: inputMessage })
+      });
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error from API:', errorData);
+      return;
+    }
 
     const data = await response.json();
     const aiMessage = {
@@ -41,8 +52,10 @@ export default function InsiderPage() {
       timestamp: new Date().toLocaleTimeString()
     };
     setMessages([...messages, newMessage, aiMessage]);
-    console.log(response);
-  };
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+};
   return (
     <div className="flex h-screen w-full flex-col bg-gray-950 text-gray-50">
       <header className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
