@@ -5,7 +5,8 @@ export default async function Promotions() {
   const user = await currentUser();
   return (
     <div>
-        <SearchBar/>
+      <h1>Searchbro</h1>
+      
     </div>
     
   );

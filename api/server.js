@@ -16,12 +16,12 @@ app.get('/publications', async (req, res) => {
     res.json(publications);
 });
 
-// traerlas al feed mediante un search bar? no tiene que implementarse 
+/* traerlas al feed mediante un search bar? no tiene que implementarse 
 app.get('/publications/:id', async (req, res) => {
     const { id } = req.params;
     const publication = await prisma.publications.findUnique({ where: { id } });
     res.json(publication);
-});
+});*/
 
 // publicar un post
 app.post('/publications', async (req, res) => {
@@ -49,7 +49,6 @@ app.delete('/publications/:id', async (req, res) => {
 
 
 // ENDPOINTS PARA FINANCES
-
 // para traer el "estado de cuenta" como widget a la interfaz principal 
 app.get('/finances', async (req, res) => {
     const finances = await prisma.finances.findMany();
@@ -76,25 +75,25 @@ app.get('/promotions', async (req, res) => {
     res.json(promotions);
 });
 
-// publicar un post
-app.post('/publications', async (req, res) => {
-    const newPublication = await prisma.publications.create({ data: req.body });
-    res.json(newPublication);
+// publicar una promoción
+app.post('/promotions', async (req, res) => {
+    const newPromotion = await prisma.promotions.create({ data: req.body });
+    res.json(newPromotion);
 });
 
-// editar un post (also no tiene que ser implementado)
-app.put('/publications/:id', async (req, res) => {
+// editar una promoción (also no tiene que ser implementado)
+app.put('/promotions/:id', async (req, res) => {
     const { id } = req.params;
-    const updatedPublication = await prisma.publications.update({
+    const updatedPromotion = await prisma.promotions.update({
         where: { id },
         data: req.body,
     });
-    res.json(updatedPublication);
+    res.json(updatedPromotion);
 });
 
 
-// borrar una publicación
-app.delete('/publications/:id', async (req, res) => {
+// borrar una promoción
+app.delete('/promotions/:id', async (req, res) => {
     const { id } = req.params;
     await prisma.publications.delete({ where: { id } });
     res.json({ message: 'Publication deleted' });
