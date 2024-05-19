@@ -76,6 +76,31 @@ app.get('/promotions', async (req, res) => {
     res.json(promotions);
 });
 
+// publicar un post
+app.post('/publications', async (req, res) => {
+    const newPublication = await prisma.publications.create({ data: req.body });
+    res.json(newPublication);
+});
+
+// editar un post (also no tiene que ser implementado)
+app.put('/publications/:id', async (req, res) => {
+    const { id } = req.params;
+    const updatedPublication = await prisma.publications.update({
+        where: { id },
+        data: req.body,
+    });
+    res.json(updatedPublication);
+});
+
+
+// borrar una publicación
+app.delete('/publications/:id', async (req, res) => {
+    const { id } = req.params;
+    await prisma.publications.delete({ where: { id } });
+    res.json({ message: 'Publication deleted' });
+});
+
+
 
 
 
