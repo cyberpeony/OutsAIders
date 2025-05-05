@@ -23,8 +23,8 @@ OutsAIders es una plataforma web desarrollada en 48 horas durante GuadalaHacks 2
 
 ## Estructura del repositorio
 
-- `/src`: Código fuente del frontend  
-- `/public`: Recursos estáticos  
+- `/frontend`: Código fuente del frontend  
+- `/db`: Código backend 
 - `README.md`: Descripción general del proyecto
 
 ---
